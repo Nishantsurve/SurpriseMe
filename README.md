@@ -14,7 +14,7 @@ The **Surprise Me App** is a fun and interactive web application that provides u
 - 🎨 Dynamic background gradient changes for visual appeal.
 
 ## Demo
-🚀 [Live Demo](#) (Replace with your deployed link)
+🚀 [Live Demo](#) (https://nishantsurve-surpriseme.netlify.app/)
 
 ## Installation
 To run the project locally, follow these steps:
