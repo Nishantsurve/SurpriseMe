@@ -60,9 +60,6 @@ npm install react framer-motion canvas-confetti react-toastify use-sound
 - [Official Joke API](https://official-joke-api.appspot.com/random_joke) - Fetches random jokes.
 - [Giphy API](https://developers.giphy.com/) - Fetches related GIFs.
 
-## Screenshots
-![App Screenshot](#) *(Replace with actual screenshot)*
-
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 

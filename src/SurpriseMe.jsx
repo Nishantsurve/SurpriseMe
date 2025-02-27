@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import confetti from "canvas-confetti";
 import { motion } from "framer-motion";
@@ -17,11 +18,18 @@ const SurpriseMe = () => {
   const [name, setName] = useState("");
   const [streak, setStreak] = useState(0);
   const [play] = useSound("/surprise.mp3");
+  const [spin, setSpin] = useState(0);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const colors = [
     "#ffadad", "#ffd6a5", "#fdffb6", "#caffbf",
     "#9bf6ff", "#a0c4ff", "#bdb2ff",
   ];
+
+  const playSound = () => {
+    const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2570/2570-preview.mp3');
+    audio.play();
+  };
 
   const fetchJokeAndGif = async () => {
     setLoading(true);
@@ -53,8 +61,9 @@ const SurpriseMe = () => {
     const color2 = colors[Math.floor(Math.random() * colors.length)];
     setBgGradient(`linear-gradient(to right, ${color1}, ${color2})`);
 
-    play();
+    playSound();
     confetti({ particleCount: 150, spread: 90 });
+    toast.info("⏳ Generating Surprise...");
     fetchJokeAndGif();
     setStreak(prevStreak => {
       const newStreak = prevStreak + 1;
@@ -63,6 +72,9 @@ const SurpriseMe = () => {
       }
       return newStreak;
     });
+    
+    // Add spin animation
+    setSpin(prev => prev + 360);
   };
 
   const shareOnWhatsApp = () => {
@@ -86,6 +98,7 @@ const SurpriseMe = () => {
         justifyContent: "center",
       }}
     >
+      
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
       <motion.h1
         animate={{ scale: [1, 1.1, 1] }}
@@ -111,8 +124,24 @@ const SurpriseMe = () => {
       />
 
       <motion.button
-        whileHover={{ scale: 1.1 }}
+        animate={{ 
+          rotate: spin,
+          x: position.x,
+          y: position.y
+        }}
+        whileHover={{
+          scale: 1.1,
+          transition: { type: "spring", stiffness: 300 }
+        }}
         whileTap={{ scale: 0.9 }}
+        onHoverStart={() => {
+          setPosition({
+            x: (Math.random() - 0.5) * 40,
+            y: (Math.random() - 0.5) * 40
+          });
+        }}
+        onHoverEnd={() => setPosition({ x: 0, y: 0 })}
+        transition={{ type: "spring", stiffness: 300, damping: 10 }}
         onClick={handleClick}
         style={{
           padding: "15px 30px",
@@ -158,5 +187,4 @@ const SurpriseMe = () => {
     </div>
   );
 };
-
 export default SurpriseMe;
